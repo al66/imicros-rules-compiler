@@ -1,0 +1,29 @@
+{
+    "name": "imicros-rules-compiler",
+    "version": "0.0.1",
+    "description": "rules interpreter/compiler for rules engine",
+    "main": "index.js",
+    "scripts": {
+        
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/al66/imicros-rules-compiler.git"
+    },
+    "keywords": [
+        "condition",
+        "rule",
+        "engine",
+        "DMN",
+        "decision"
+    ],
+    "author": "Andreas Leinen <andreas.leinen@imicros.de>       (www.imicros.de)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/al66/imicros-rules-compiler/issues"
+    },
+    "homepage": "https://github.com/al66/imicros-rules-compiler#readme",
+    "dependencies": {
+        "token-stream": "^1.0.0"
+    }
+}
