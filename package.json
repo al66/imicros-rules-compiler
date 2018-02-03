@@ -4,7 +4,7 @@
     "description": "rules interpreter/compiler for rules engine",
     "main": "index.js",
     "scripts": {
-        
+        "test": "jest --coverage --no-cache"
     },
     "repository": {
         "type": "git",
@@ -23,7 +23,10 @@
         "url": "https://github.com/al66/imicros-rules-compiler/issues"
     },
     "homepage": "https://github.com/al66/imicros-rules-compiler#readme",
-    "dependencies": {
+    "devDependencies": {
+        "jest": "^22.1.4"
+    },
+    "dependencies": {  
         "token-stream": "^1.0.0"
     }
 }
