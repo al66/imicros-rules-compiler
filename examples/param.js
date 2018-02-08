@@ -1,17 +1,8 @@
 let user = {
-    groups: [
-        {
-            id: "0001",
-            name: "my group"    
-        },
-        {
-            id: "0002",
-            name: "SAP Support"
-        }
-    ]
+    groups: []
 }
 
-for(let n=0; n<2; n++) {
+for(let n=0; n<4; n++) {
     let g = {
         id: "G"+n,
         name: "group:"+n,
@@ -21,7 +12,8 @@ for(let n=0; n<2; n++) {
 
 let ressource = {
     id: "R0001",
-    status: "published"
+    status: "published",
+    folders: [500, 600, 700]
 }
 let operation = {
     type: "write"
@@ -31,4 +23,5 @@ module.exports.acl = {
         user: user,
         ressource: ressource,
         operation: operation,
+        result: {}
        };

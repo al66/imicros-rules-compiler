@@ -4,7 +4,8 @@
     "description": "rules interpreter/compiler for rules engine",
     "main": "index.js",
     "scripts": {
-        "test": "jest --coverage --no-cache"
+        "test-cover": "jest --coverage --no-cache",
+        "test": "jest --no-cache"
     },
     "repository": {
         "type": "git",
@@ -26,7 +27,8 @@
     "devDependencies": {
         "jest": "^22.1.4"
     },
-    "dependencies": {  
+    "dependencies": {
+        "jspath": "^0.4.0",
         "token-stream": "^1.0.0"
     }
 }

@@ -12,7 +12,7 @@ var context = require("./lib/context");
 context.param = param;
 //
 
-let ts = "user.groups.name contains 'SAP Support','SAP Core Team' && ressource.status is 'published' && operation.type is ['read','write'] && operation.status == 'realized' && environment.temperature is ([15.33 .. 17.9],5,>=7 and <= 200.7) && environment.date in [21.1.2018..23-2-2018,5/23/2016]";
+let ts = "user.groups.name :: 'SAP Support','SAP Core Team' & !'Guests' && ressource.status :: 'published' && operation.type :: ['read','write'] && operation.status :: 'realized' && environment.temperature :: [15.33 .. 17.9],5,>=7 & <= environment.highest + 2 && environment.date :: [21.1.2018..23-2-2018,5/23/2016] =>  acl.status := 'alowed'";
 
 console.log("EXPRESSION:", ts);
 ifeel.compile(ts).then((compiled) => {
