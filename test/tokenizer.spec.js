@@ -32,15 +32,31 @@ describe("Test tokenizer", () => {
             expect(tokens[i++].value).toBe(")");
         })
     })
-    exp = "x < #";
+    exp = "6:12:05,7:13";
     describe("Expression "+exp, () => {
         let tokens = [];
         let token;
         while (token = matchToToken(ifeel.exec(exp))) {
             tokens.push(token);
         };
-        it("array length should be 4", () => {
-            expect(tokens.length).toBe(4); 
+        it("should contain expected token", () => {
+            let i = 0;
+            expect(tokens[i].type).toBe("time");
+            expect(tokens[i++].value).toBe("6:12:05");
+            expect(tokens[i++].value).toBe(",");
+            expect(tokens[i].type).toBe("time");
+            expect(tokens[i++].value).toBe("7:13");
+        })
+    })
+    exp = "x < 5";
+    describe("Expression "+exp, () => {
+        let tokens = [];
+        let token;
+        while (token = matchToToken(ifeel.exec(exp))) {
+            tokens.push(token);
+        };
+        it("array length should be 5", () => {
+            expect(tokens.length).toBe(5); 
         });
         it("should contain expected token", () => {
             let i = 0;
@@ -48,6 +64,32 @@ describe("Test tokenizer", () => {
             expect(tokens[i++].type).toBe("whitespace");
             expect(tokens[i++].value).toBe("<");
             expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("5");
+        })
+    })
+    exp = "@@ ~C# i[..string]";
+    describe("Expression "+exp, () => {
+        let tokens = [];
+        let token;
+        while (token = matchToToken(ifeel.exec(exp))) {
+            tokens.push(token);
+        };
+        it("array length should be 11", () => {
+            expect(tokens.length).toBe(11); 
+        });
+        it("should contain expected token", () => {
+            let i = 0;
+            expect(tokens[i++].value).toBe("@@");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("~");
+            expect(tokens[i++].value).toBe("C");
+            expect(tokens[i++].value).toBe("#");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("i");
+            expect(tokens[i++].value).toBe("[");
+            expect(tokens[i++].value).toBe("..");
+            expect(tokens[i++].value).toBe("string");
+            expect(tokens[i++].value).toBe("]");
         })
     })
     exp = "i++";
@@ -126,7 +168,7 @@ describe("Test tokenizer", () => {
             expect(tokens[i++].value).toBe("'String not closed");
         })
     });
-    exp = "user.groups.name contains 'SAP Support','SAP Core Team' && ressource.status is 'published' && operation.type is ['read','write'] && operation.status == 'realized' && environment.date in [21.1.2018..23-2-2018,5/23/2016]";
+    exp = "@ user.groups.name contains 'SAP Support','SAP Core Team' && ressource.status is 'published' && operation.type is ['read','write'] && operation.status == 'realized' && environment.date in [21.1.2018..23-2-2018,5/23/2016]";
     describe("Expression - complex", () => {
         let tokens = [];
         let token;
@@ -138,6 +180,8 @@ describe("Test tokenizer", () => {
         });
         it("should contain expected token", () => {
             let i = 0;
+            expect(tokens[i++].value).toBe("@");
+            expect(tokens[i++].type).toBe("whitespace");
             expect(tokens[i++].value).toBe("user");
             expect(tokens[i++].value).toBe(".");
             expect(tokens[i++].value).toBe("groups");
@@ -201,4 +245,83 @@ describe("Test tokenizer", () => {
             expect(tokens[i++].value).toBe("]");
         })
     });    
+    exp = "@ age :: ]12..16[,>65";
+    describe("Expression "+exp, () => {
+        let tokens = [];
+        let token;
+        while (token = matchToToken(ifeel.exec(exp))) {
+            tokens.push(token);
+        };
+        it("array length should be >= 11", () => {
+            expect(tokens.length >= 11).toBe(true); 
+        });
+        it("should contain expected token", () => {
+            let i = 0;
+            expect(tokens[i++].value).toBe("@");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("age");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("::");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("]");
+            expect(tokens[i++].value).toBe("12");
+            expect(tokens[i++].value).toBe("..");
+            expect(tokens[i++].value).toBe("16");
+            expect(tokens[i++].value).toBe("[");
+            expect(tokens[i++].value).toBe(",");
+            expect(tokens[i++].value).toBe(">");
+            expect(tokens[i++].value).toBe("65");
+        })
+    });    
+    exp = "@ temperature :: ]17.5..20.3[,>23.7";
+    describe("Expression "+exp, () => {
+        let tokens = [];
+        let token;
+        while (token = matchToToken(ifeel.exec(exp))) {
+            tokens.push(token);
+        };
+        it("array length should be >= 11", () => {
+            expect(tokens.length >= 11).toBe(true); 
+        });
+        it("should contain expected token", () => {
+            let i = 0;
+            expect(tokens[i++].value).toBe("@");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("temperature");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("::");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("]");
+            expect(tokens[i++].value).toBe("17.5");
+            expect(tokens[i++].value).toBe("..");
+            expect(tokens[i++].value).toBe("20.3");
+            expect(tokens[i++].value).toBe("[");
+            expect(tokens[i++].value).toBe(",");
+            expect(tokens[i++].value).toBe(">");
+            expect(tokens[i++].value).toBe("23.7");
+        })
+    });    
+    exp = "@ date :: 2018-01-21T00:00:00Z";
+    describe("Expression "+exp, () => {
+        let tokens = [];
+        let token;
+        while (token = matchToToken(ifeel.exec(exp))) {
+            tokens.push(token);
+        };
+        it("array length should be >= 7", () => {
+            expect(tokens.length >= 7).toBe(true); 
+        });
+        it("should contain expected token", () => {
+            let i = 0;
+            expect(tokens[i++].value).toBe("@");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("date");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("::");
+            expect(tokens[i++].type).toBe("whitespace");
+            expect(tokens[i++].value).toBe("2018-01-21T00:00:00Z");
+        })
+    });    
+    
+    
 });

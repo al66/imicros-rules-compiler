@@ -5,7 +5,21 @@
     "main": "index.js",
     "scripts": {
         "test-cover": "jest --coverage --no-cache",
-        "test": "jest --no-cache"
+        "test": "jest --no-cache",
+        "test-generator": "jest test/codegenerator.spec.js --no-cache",
+        "test-analyzer": "jest test/analyzer.spec.js --no-cache",
+        "test-symbols": "jest test/symbols.spec.js --no-cache",
+        "test-parser-cover": "jest test/parser.spec.js --coverage --no-cache",
+        "test-parser": "jest test/parser.spec.js --no-cache",
+        "test-lexer": "jest test/lexer.spec.js --no-cache",
+        "test-lexer-cover": "jest test/lexer.spec.js --coverage --no-cache",
+        "test-tokenizer": "jest test/tokenizer.spec.js --no-cache"
+    },
+    "jest": {
+      "collectCoverageFrom": [
+        "lib/*.js",
+        "!lib/globals.js"
+      ]
     },
     "repository": {
         "type": "git",
@@ -25,10 +39,11 @@
     },
     "homepage": "https://github.com/al66/imicros-rules-compiler#readme",
     "devDependencies": {
-        "jest": "^22.1.4"
+        "jest": "^22.1.4",
+        "js-beautify": "^1.7.5"
     },
     "dependencies": {
-        "jspath": "^0.4.0",
-        "token-stream": "^1.0.0"
+        "datejs": "^1.0.0-rc3",
+        "jspath": "^0.4.0"
     }
 }
