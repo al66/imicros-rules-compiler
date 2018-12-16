@@ -1,6 +1,6 @@
 {
     "name": "@al66/imicros-rules-compiler",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "rules interpreter/compiler for rules engine",
     "main": "index.js",
     "scripts": {
@@ -17,10 +17,10 @@
         "test-tokenizer": "jest test/tokenizer.spec.js --no-cache"
     },
     "jest": {
-      "collectCoverageFrom": [
-        "lib/*.js",
-        "!lib/globals.js"
-      ]
+        "collectCoverageFrom": [
+            "lib/*.js",
+            "!lib/globals.js"
+        ]
     },
     "repository": {
         "type": "git",
