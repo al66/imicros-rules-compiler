@@ -7,7 +7,7 @@ const Token = require("../lib/lexer").Token;
 
 let exp = ""
 describe("Test Parser - parse context", () => {
-    exp = "@@ ~U user.groups.name[..string] := 'Guests'; user.age[number]; user.id[string]; environment.date[date] := now()"
+    exp = "@@ ~U user.groups.name[..string] := 'Guests'; user.age[number]; user.id[string]; environment.date[date] := now() @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -90,7 +90,7 @@ describe("Test Parser - parse context", () => {
             })
         })
     })
-    exp = "@@ ~U "
+    exp = "@@ ~U @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -102,7 +102,7 @@ describe("Test Parser - parse context", () => {
             })
         })
     })
-    exp = "@@ ~A "
+    exp = "@@ ~A @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -114,7 +114,7 @@ describe("Test Parser - parse context", () => {
             })
         })
     })
-    exp = "@@ ~F "
+    exp = "@@ ~F @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -126,7 +126,7 @@ describe("Test Parser - parse context", () => {
             })
         })
     })
-    exp = "@@ ~R "
+    exp = "@@ ~R @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -138,7 +138,7 @@ describe("Test Parser - parse context", () => {
             })
         })
     })
-    exp = "@@ ~C+ "
+    exp = "@@ ~C+ @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -150,7 +150,7 @@ describe("Test Parser - parse context", () => {
             })
         })
     })
-    exp = "@@ ~C# "
+    exp = "@@ ~C# @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -162,7 +162,7 @@ describe("Test Parser - parse context", () => {
             })
         })
     })
-    exp = "@@ ~C< "
+    exp = "@@ ~C< @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -174,7 +174,7 @@ describe("Test Parser - parse context", () => {
             })
         })
     })
-    exp = "@@ ~C> "
+    exp = "@@ ~C> @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -186,7 +186,7 @@ describe("Test Parser - parse context", () => {
             })
         })
     })
-    exp = "@@ ~S"
+    exp = "@@ ~S @@"
     describe("Exceptions - Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -208,7 +208,7 @@ describe("Test Parser - parse context", () => {
     })
 })
 describe("Test Parser - parse rule", () => {
-    exp = "@@ ~A user.groups.name[..string]; name.default[string]:= 'Unknown' @ user.groups.name :: 'group:1' => result.acl := 'allow'"
+    exp = "@@ ~A user.groups.name[..string]; name.default[string]:= 'Unknown' @ user.groups.name :: 'group:1' => result.acl := 'allow' @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -252,56 +252,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@@ ~A user.groups.name[..string]; name.default[string]:= 'Unknown' @ user.groups.name :: 'group:1' => result.acl := 'allow'"
-    describe("Expression "+exp, () => {
-        exp = "@@ ~A user.groups.name[..string]; name.default[string]:= 'Unknown'"
-        let lexer = new Lexer(exp)
-        let parser = new Parser()
-        it("should contain expected nodes", () => {
-            expect.assertions(9);
-            return parser.parse(lexer).then(parser => {
-                exp = "@ user.groups.name :: 'group:1' => result.acl := 'allow'"
-                lexer = new Lexer(exp)
-                parser.parse(lexer).then(parser => {
-                    //console.log(JSON.stringify(parser.ast()))
-                    let result = parser.ast().rules[0]
-                    expect(result).toEqual(expect.objectContaining({
-                        node: Node.RULE
-                    }))
-                    expect(result.when).toEqual(expect.objectContaining({
-                        node: Node.WHEN
-                    }))
-                    expect(result.when.condition).toEqual(expect.objectContaining({
-                        node: Node.RELATION_OP,
-                        operator: "=="
-                    }))
-                    expect(result.when.condition.left).toEqual(expect.objectContaining({
-                        node: Node.VAR,
-                        name: "user.groups.name"
-                    }))
-                    expect(result.when.condition.right).toEqual(expect.objectContaining({
-                        node: Node.STRING,
-                        value: "'group:1'"
-                    }))
-                    expect(result.then).toEqual(expect.objectContaining({
-                        node: Node.THEN
-                    }))
-                    expect(result.then.actions[0]).toEqual(expect.objectContaining({
-                        node: Node.ASSIGN
-                    }))
-                    expect(result.then.actions[0].var).toEqual(expect.objectContaining({
-                        node: Node.VAR,
-                        name: "result.acl"
-                    }))
-                    expect(result.then.actions[0].expression).toEqual(expect.objectContaining({
-                        node: Node.STRING,
-                        value: "'allow'"
-                    }))
-                })
-            })
-        })
-    })
-    exp = "@ => result.sum := 5 + 2"
+    exp = "@@ @ => result.sum := 5 + 2 @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -337,7 +288,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@ => result.sum := -5 + 2"
+    exp = "@@ @ => result.sum := -5 + 2 @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -377,7 +328,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@ user.age :: >= 16 & <= +35, >60+7-x => result := 'true'"
+    exp = "@@ @ user.age :: >= 16 & <= +35, >60+7-x => result := 'true' @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -470,7 +421,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@ environment.date :: [2018-1-21..2018-2-23],>=2018-05-07 => result := 'true'; rule:= 5"
+    exp = "@@ @ environment.date :: [2018-1-21..2018-2-23],>=2018-05-07 => result := 'true'; rule:= 5 @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -554,7 +505,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@ environment.date :: [2018-01-21T00:00:00Z..2018-02-23T00:00:00Z],>=2018-05-07 => result := 'true'; rule:= 5"
+    exp = "@@ @ environment.date :: [2018-01-21T00:00:00Z..2018-02-23T00:00:00Z],>=2018-05-07 => result := 'true'; rule:= 5 @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -638,7 +589,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@ environment.time :: [6:00..08:00:00],>=18:00 => result := 'true'; rule:= 5"
+    exp = "@@ @ environment.time :: [6:00..08:00:00],>=18:00 => result := 'true'; rule:= 5 @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -723,7 +674,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@ age :: ]12..16[,>65 => result := 'true'"
+    exp = "@@ @ age :: ]12..16[,>65 => result := 'true' @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -797,7 +748,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })    
-    exp = "@ age :: min(user.age,(20+2)-1) => result.acl := 'allow'"
+    exp = "@@ @ age :: min(user.age,(20+2)-1) => result.acl := 'allow' @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -864,7 +815,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@ user.groups.name :: 'admin','guests' => result.acl := 'allow'"
+    exp = "@@ @ user.groups.name :: 'admin','guests' => result.acl := 'allow' @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -922,7 +873,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@ amount :: 20.8 / 2.1 * 5.9 => result.acl := 'allow'"
+    exp = "@@ @ amount :: 20.8 / 2.1 * 5.9 => result.acl := 'allow' @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -981,7 +932,7 @@ describe("Test Parser - parse rule", () => {
             })
         })
     })
-    exp = "@ user.groups.name xy =>"
+    exp = "@@ @ user.groups.name xy => @@"
     describe("Exceptions - Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -995,12 +946,12 @@ describe("Test Parser - parse rule", () => {
                 }))
                 expect(result.origin.match).toEqual(expect.objectContaining({
                     value: "xy",
-                    index: 19
+                    index: 22
                 }))
             })
         })
     })
-    exp = "@ user.groups.name :: 'guests' => result := 'allow' xy"
+    exp = "@@ @ user.groups.name :: 'guests' => result := 'allow' xy @@"
     describe("Exceptions - Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()

@@ -9,7 +9,7 @@ const beautify = require('js-beautify').js_beautify
 
 let exp = ""
 describe("Test Symbols - build symbol table", () => {
-    exp = "@@ ~U user.groups.name[..string] := 'Guests'; user.age[number]; user.id[string]; environment.date[date] := now(); environment.time[..time]"
+    exp = "@@ ~U user.groups.name[..string] := 'Guests'; user.age[number]; user.id[string]; environment.date[date] := now(); environment.time[..time] @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -46,7 +46,7 @@ describe("Test Symbols - build symbol table", () => {
             })
         })
     })
-    exp = "@@ ~U user.groups.name[..string] := 'Guests'; user.age[number]; user.id[string]; user.groups.name[string]; environment.date[date] := now(); environment.time[..time]"
+    exp = "@@ ~U user.groups.name[..string] := 'Guests'; user.age[number]; user.id[string]; user.groups.name[string]; environment.date[date] := now(); environment.time[..time] @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()

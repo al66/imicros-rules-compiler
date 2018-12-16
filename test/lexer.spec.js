@@ -116,13 +116,13 @@ describe("Test Lexer", () => {
             lexer.eat(Token.NUMBER)
         })
     })
-    exp = "@@ ~C# user.groups"
+    exp = "@@ ~C# user.groups @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp);
-        it("current: CONTEXT", () => {
-            expect(lexer.current.type).toBe(Token.CONTEXT)
+        it("current: RULESET", () => {
+            expect(lexer.current.type).toBe(Token.RULESET)
             expect(lexer.current.value).toBe("@@")
-            lexer.eat(Token.CONTEXT)
+            lexer.eat(Token.RULESET)
         })
         it("next HITPOLICY", () => {
             expect(lexer.current.type).toBe(Token.HITPOLICY)
@@ -143,6 +143,11 @@ describe("Test Lexer", () => {
             expect(lexer.current.type).toBe(Token.NAME)
             expect(lexer.current.value).toBe("user.groups")
             lexer.eat(Token.NAME)
+        })
+        it("current: RULESET", () => {
+            expect(lexer.current.type).toBe(Token.RULESET)
+            expect(lexer.current.value).toBe("@@")
+            lexer.eat(Token.RULESET)
         })
     })
     exp = "user.groups."

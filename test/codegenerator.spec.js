@@ -11,9 +11,11 @@ const beautify = require('js-beautify').js_beautify
 
 let exp = ""
 describe("Test Compiler - parse rule", () => {
-    exp = "@@ ~F user.groups.name[..string]; > result.acl[string]:= 'decline'; > result.rule[number]:= 0"
+    exp = "@@ "
+    exp += "~F user.groups.name[..string]; > result.acl[string]:= 'decline'; > result.rule[number]:= 0"
     exp += "@ user.groups.name :: 'admin','guests' => result.acl := 'allow'; result.rule := 1"
     exp += "@ user.groups.name :: 'others','members' => result.acl := 'allow'; result.rule := 2"
+    exp += " @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -44,8 +46,10 @@ describe("Test Compiler - parse rule", () => {
             })
         })
     })
-    exp = "@@ environment.date[date]; >date[date] := environment.date; result[string]:='false'"
+    exp = "@@ "
+    exp += "environment.date[date]; >date[date] := environment.date; result[string]:='false'"
     exp += "@ environment.date :: [2018-1-21..2018-2-23],>=2018-05-07 => result := 'true'; rule:= 5"
+    exp += " @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -77,8 +81,10 @@ describe("Test Compiler - parse rule", () => {
             */
         })
     })
-    exp = "@@ environment.time[time]; >time[time] := environment.time; result[string]:='false'"
+    exp = "@@ "
+    exp += "environment.time[time]; >time[time] := environment.time; result[string]:='false'"
     exp += "@ environment.time :: [6:00..8:00],>14:00:30 => result := 'true'"
+    exp += " @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -111,8 +117,10 @@ describe("Test Compiler - parse rule", () => {
             */
         })
     })
-    exp = "@@ environment.date[date]; >date[date] := environment.date; result[string]:='false'"
+    exp = "@@ "
+    exp += "environment.date[date]; >date[date] := environment.date; result[string]:='false'"
     exp += "@ environment.date :: [2018-1-21 06:00..2018-2-23 08:00],>=2018-05-07 09:00 => result := 'true'; rule:= 5"
+    exp += " @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
@@ -122,7 +130,7 @@ describe("Test Compiler - parse rule", () => {
             .then(ast => Analyzer.analyze(ast))
             .then(ast => Codegenerator.build(ast))
             .then(ruleset => {
-                console.log(beautify(ruleset.toString(), { indent_size: 2, wrap_line_length: 80 }));
+                //console.log(beautify(ruleset.toString(), { indent_size: 2, wrap_line_length: 80 }));
                 let f = ruleset.getFunction()
                 let response = f({environment: {date: "2018-1-21 06:00"}})
                 //console.log(response)

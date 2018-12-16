@@ -1,11 +1,12 @@
 {
-    "name": "imicros-rules-compiler",
-    "version": "0.0.1",
+    "name": "@al66/imicros-rules-compiler",
+    "version": "0.0.3",
     "description": "rules interpreter/compiler for rules engine",
     "main": "index.js",
     "scripts": {
         "test-cover": "jest --coverage --no-cache",
         "test": "jest --no-cache",
+        "test-compiler": "jest test/compiler.spec.js --no-cache",
         "test-generator": "jest test/codegenerator.spec.js --no-cache",
         "test-analyzer": "jest test/analyzer.spec.js --no-cache",
         "test-symbols": "jest test/symbols.spec.js --no-cache",

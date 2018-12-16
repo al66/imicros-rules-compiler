@@ -10,9 +10,11 @@ const beautify = require('js-beautify').js_beautify
 
 let exp = ""
 describe("Test Compiler - parse rule", () => {
-    exp = "@@ ~F user.groups.name[..string]; user.id[number]; > result.acl[string]:= 'decline'"
+    exp = "@@ "
+    exp += "~F user.groups.name[..string]; user.id[number]; > result.acl[string]:= 'decline'"
     exp += "@ user.groups.name :: 'admin','guests' && user.id :: 1000+ +10 => result.acl := 'allow'"
     exp += "@ user.groups.name :: 'others','members' => result.acl := 'allow'"
+    exp += " @@"
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp)
         let parser = new Parser()
