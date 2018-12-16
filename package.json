@@ -1,6 +1,6 @@
 {
     "name": "@al66/imicros-rules-compiler",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "description": "rules interpreter/compiler for rules engine",
     "main": "index.js",
     "scripts": {
@@ -40,8 +40,8 @@
     },
     "homepage": "https://github.com/al66/imicros-rules-compiler#readme",
     "devDependencies": {
-        "jest": "^22.1.4",
-        "js-beautify": "^1.7.5"
+        "jest": "^23.6.0",
+        "js-beautify": "^1.8.9"
     },
     "dependencies": {
         "datejs": "^1.0.0-rc3",
