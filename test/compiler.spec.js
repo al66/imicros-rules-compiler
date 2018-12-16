@@ -1,6 +1,6 @@
 "use strict";
 
-const Compiler = require("../index");
+const { Compiler } = require("../index");
 const beautify = require('js-beautify').js_beautify;
 
 let exp;
