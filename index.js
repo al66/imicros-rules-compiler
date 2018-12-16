@@ -3,4 +3,6 @@
  */
 "use strict";
 
-module.exports = require("./lib/compiler");
+module.exports = {
+    Compiler: require("./lib/compiler")
+};
