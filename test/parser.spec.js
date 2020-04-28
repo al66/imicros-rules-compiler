@@ -138,6 +138,18 @@ describe("Test Parser - parse context", () => {
             });
         });
     });
+    exp = "@@ ~C @@";
+    describe("Expression "+exp, () => {
+        let lexer = new Lexer(exp);
+        let parser = new Parser();
+        it("should be parsed with hitpolicy C", () => {
+            expect.assertions(1);
+            return parser.parse(lexer).then(parser => {
+                let result = parser.ast();
+                expect (result.hitpolicy).toEqual("C");
+            });
+        });
+    });
     exp = "@@ ~C+ @@";
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp);
@@ -195,11 +207,11 @@ describe("Test Parser - parse context", () => {
             return parser.parse(lexer).catch(result => {
                 expect(result.name).toEqual("SyntaxError");
                 expect(result.code).toEqual("002");
-                expect(result.origin).toEqual(expect.objectContaining({
-                    expected: "U,A,F,R,C+,C<,C>,C#",
+                expect(result.data).toEqual(expect.objectContaining({
+                    expected: "U,A,F,R,C,C+,C<,C>,C#",
                     found: "S"
                 }));
-                expect(result.origin.match).toEqual(expect.objectContaining({
+                expect(result.data.match).toEqual(expect.objectContaining({
                     value: "S",
                     index: 4
                 }));
@@ -940,11 +952,11 @@ describe("Test Parser - parse rule", () => {
             expect.assertions(3);
             return parser.parse(lexer).catch(result => {
                 expect(result.name).toEqual("SyntaxError");
-                expect(result.origin).toEqual(expect.objectContaining({
+                expect(result.data).toEqual(expect.objectContaining({
                     expected: "::",
                     found: "name"
                 }));
-                expect(result.origin.match).toEqual(expect.objectContaining({
+                expect(result.data.match).toEqual(expect.objectContaining({
                     value: "xy",
                     index: 22
                 }));
@@ -956,20 +968,19 @@ describe("Test Parser - parse rule", () => {
         let lexer = new Lexer(exp);
         let parser = new Parser();
         it("should throw SyntaxError", () => {
-            expect.assertions(2);
+            expect.assertions(5);
             return parser.parse(lexer).catch(result => {
                 expect(result.name).toEqual("SyntaxError");
                 expect(result.code).toEqual("003");
-                /*
-                expect(result.origin).toEqual(expect.objectContaining({
-                    expected: "::",
-                    found: "name"
-                }))
-                expect(result.origin.match).toEqual(expect.objectContaining({
+                expect(result.data).toEqual(expect.objectContaining({
+                    expected: "End of String",
+                    found: "xy"
+                }));
+                expect(result.data.match).toEqual(expect.objectContaining({
                     value: "xy",
-                    index: 19
-                }))
-                */
+                    index: 55
+                }));
+                expect(result.data.match.input).toEqual(exp);
             });
         });
     });

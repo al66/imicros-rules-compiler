@@ -10,8 +10,8 @@ const beautify = require('js-beautify').js_beautify;
 let exp, input = [], response;
 // Define rule set
 exp = "@@ "
-exp += "~F user.groups.name[..string]; > result.acl[string]:= 'decline'; > result.rule[number]:= 0"
-exp += "@ user.groups.name :: 'admin','guests' => result.acl := 'allow'; result.rule := 1"
+exp += "~F user[..object]; user.groups.name[..string]; > result.acl[string]:= 'decline'; > result.rule[number]:= 0"
+exp += "@ user.groups.name :: 'admin','guests' => result.acl := 'allow'; result.rule := 1; result.object := user.groups.name"
 exp += "@ user.groups.name :: 'others','members' => result.acl := 'allow'; result.rule := 2"
 exp += "@@"
 

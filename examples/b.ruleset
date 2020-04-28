@@ -1,0 +1,4 @@
+@@ ~F event[string]; > mail.template.subject[string] := ''
+@ event :: 'users.verification.requested'; payload.locale :: 'de' => mail.template.subject := '.templates/users.verification.subject.de' 
+@ event :: 'users.verification.requested'; payload.locale :: 'en' => mail.template.subject := '.templates/users.verification.subject.en' 
+@@

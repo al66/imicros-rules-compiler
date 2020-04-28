@@ -1,0 +1,4 @@
+@@ ~F user.groups.name[..string]; > result.acl[string]:= 'decline'; > result.rule[number]:= 0
+@ user.groups.name :: 'admin','guests' => result.acl := 'allow'; result.rule := 1
+@ user.groups.name :: 'others','members' => result.acl := 'allow'; result.rule := 2
+@@
