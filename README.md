@@ -54,6 +54,7 @@ Valid types are
 -   <code>[..date]</code> array of dates
 -   <code>[time]</code>
 -   <code>[..time]</code> array of times
+-   <code>[boolean]</code>
 ## Examples for valid conditions
 -   <code>user.age :: >= 16 & <= +35</code> Age is between 16 and 35
 -   <code>environment.date :: [2018-1-21..2018-2-23],>=2018-05-07</code> Date is between 2018-1-21 and 2018-2-23 or greater equal 2018-05-07
