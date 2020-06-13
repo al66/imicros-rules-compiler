@@ -104,6 +104,7 @@ describe("Test Compiler - parse rule", () => {
                 expect(ruleset.input).toContainEqual({ label: "Locale", source: "user.locale", type: "string", array: false, default: "'en'"});
                 expect(ruleset.input).toContainEqual({ label: "", source: "count", type: "number", array: false, default: "1 + 1"});
                 expect(ruleset.output).toContainEqual({ label: "", destination: "date", type: "date", array: false});
+                expect(ruleset.output).toContainEqual({ label: "", destination: "result", type: "boolean", array: false});
                 // console.log(exp);
                 // console.log(util.inspect(ruleset, false, null, true ));
             });
