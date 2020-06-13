@@ -9,6 +9,8 @@
         "test": "jest --coverage --no-cache",
         "test-compiler": "jest test/compiler.spec.js --no-cache",
         "test-generator": "jest test/codegenerator.spec.js --no-cache",
+        "test-json": "jest test/jsongenerator.spec.js --no-cache",
+        "test-tree": "jest test/tree.spec.js --no-cache",
         "test-analyzer": "jest test/analyzer.spec.js --no-cache",
         "test-symbols": "jest test/symbols.spec.js --no-cache",
         "test-parser-cover": "jest test/parser.spec.js --coverage --no-cache",

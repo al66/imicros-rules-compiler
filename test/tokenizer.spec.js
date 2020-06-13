@@ -168,6 +168,22 @@ describe("Test tokenizer", () => {
             expect(tokens[i++].value).toBe("'String not closed");
         });
     });
+    exp = "#Input label #";
+    describe("Expression "+exp, () => {
+        let tokens = [];
+        let token;
+        while ((token = matchToToken(ifeel.exec(exp)))) {
+            tokens.push(token);
+        }
+        it("array length should be 1", () => {
+            expect(tokens.length).toBe(1); 
+        });
+        it("should contain expected token", () => {
+            let i = 0;
+            expect(tokens[i].type).toBe("label");
+            expect(tokens[i].value).toBe("Input label ");
+        });
+    });
     exp = "@ user.groups.name contains 'SAP Support','SAP Core Team' && ressource.status is 'published' && operation.type is ['read','write'] && operation.status == 'realized' && environment.date in [21.1.2018..23-2-2018,5/23/2016]";
     describe("Expression - complex", () => {
         let tokens = [];

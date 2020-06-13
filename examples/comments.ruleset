@@ -1,0 +1,4 @@
+@@ ~F event[string] #Event#; > mail.template.subject[string]:= '' #Template subject#; > mail.template.body[string]:= '' #Template body#; > mail.account[string]:= '' #Account#
+@ event :: 'users.verification.requested' && payload.locale :: 'de' => mail.template.subject := '.templates/users.verification.subject.de'; mail.template.body = '.templates/users.verification.body.de'; mail.account := 'accounts/andreas.leinen@imicros.de' # German version #
+@ event :: 'users.verification.requested' && payload.locale :: 'en' => mail.template.subject := '.templates/users.verification.subject.en'; mail.template.body = '.templates/users.verification.body.en'; mail.account := 'accounts/andreas.leinen@imicros.de' # English version (default version) #
+@@

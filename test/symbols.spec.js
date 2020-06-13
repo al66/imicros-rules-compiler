@@ -21,27 +21,27 @@ describe("Test Symbols - build symbol table", () => {
                 expect(ast.symbols.lookup("user.groups.name")).toEqual(expect.objectContaining({
                     node: Node.STRING_TYPE,
                     array: true,
-                    buildIn: "String"
+                    buildIn: "string"
                 }));
                 expect(ast.symbols.lookup("user.age")).toEqual(expect.objectContaining({
                     node: Node.NUMBER_TYPE,
                     array: false,
-                    buildIn: "Number"
+                    buildIn: "number"
                 }));
                 expect(ast.symbols.lookup("user.id")).toEqual(expect.objectContaining({
                     node: Node.STRING_TYPE,
                     array: false,
-                    buildIn: "String"
+                    buildIn: "string"
                 }));
                 expect(ast.symbols.lookup("environment.date")).toEqual(expect.objectContaining({
                     node: Node.DATE_TYPE,
                     array: false,
-                    buildIn: "Number"
+                    buildIn: "date"
                 }));
                 expect(ast.symbols.lookup("environment.time")).toEqual(expect.objectContaining({
                     node: Node.TIME_TYPE,
                     array: true,
-                    buildIn: "Number"
+                    buildIn: "time"
                 }));
             });
         });

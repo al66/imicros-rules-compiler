@@ -1,4 +1,4 @@
 @@ ~F event[string]; > mail.template.subject[string]:= ''; > mail.template.body[string]:= ''; > mail.account[string]:= ''
-@ event :: 'users.verification.requested'; payload.locale :: 'de' => mail.template.subject := '.templates/users.verification.subject.de'; mail.template.body = '.templates/users.verification.body.de'; mail.account := 'accounts/andreas.leinen@imicros.de'
-@ event :: 'users.verification.requested'; payload.locale :: 'en' => mail.template.subject := '.templates/users.verification.subject.en'; mail.template.body = '.templates/users.verification.body.en'; mail.account := 'accounts/andreas.leinen@imicros.de'
+@ event :: 'users.verification.requested' && payload.locale :: 'de' => mail.template.subject := '.templates/users.verification.subject.de'; mail.template.body = '.templates/users.verification.body.de'; mail.account := 'accounts/andreas.leinen@imicros.de'
+@ event :: 'users.verification.requested' && payload.locale :: 'en' => mail.template.subject := '.templates/users.verification.subject.en'; mail.template.body = '.templates/users.verification.body.en'; mail.account := 'accounts/andreas.leinen@imicros.de'
 @@

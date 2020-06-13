@@ -118,8 +118,8 @@ describe("Test Compiler - parse rule", () => {
         });
     });
     exp = "@@ ";
-    exp += "environment.date[date]; >date[date] := environment.date; result[string]:='false'";
-    exp += "@ environment.date :: [2018-1-21 06:00..2018-2-23 08:00],>=2018-05-07 09:00 => result := 'true'; rule:= 5";
+    exp += "environment.date[date]; >date[date] := environment.date; result[boolean]:=false";
+    exp += "@ environment.date :: [2018-1-21 06:00..2018-2-23 08:00],>=2018-05-07 09:00 => result := true; rule:= 5";
     exp += " @@";
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp);
@@ -134,23 +134,23 @@ describe("Test Compiler - parse rule", () => {
                 let f = ruleset.getFunction();
                 let response = f({environment: {date: "2018-1-21 06:00"}});
                 //console.log(response)
-                expect(response.result).toEqual("true");
+                expect(response.result).toEqual(true);
                 expect(response.rule).toEqual(5);
                 response = f({environment: {date: "2018-1-21 05:00"}});
                 //console.log(response)
-                expect(response.result).toEqual("false");
+                expect(response.result).toEqual(false);
                 response = f({environment: {date: "2018-1-22 05:00"}});
                 //console.log(response)
-                expect(response.result).toEqual("true");
+                expect(response.result).toEqual(true);
                 response = f({environment: {date: "2018-2-23 08:00"}});
                 //console.log(response)
-                expect(response.result).toEqual("true");
+                expect(response.result).toEqual(true);
                 response = f({environment: {date: "2018-2-23 08:00:01"}});
                 //console.log(response);
-                expect(response.result).toEqual("false");
+                expect(response.result).toEqual(false);
                 response = f({environment: {date: "2018-05-07 23:00"}});
                 //console.log(response)
-                expect(response.result).toEqual("true");
+                expect(response.result).toEqual(true);
                 expect(response.rule).toEqual(5);
             });
             /*

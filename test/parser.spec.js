@@ -27,7 +27,7 @@ describe("Test Parser - parse context", () => {
                 expect(result.definitions[0].type).toEqual(expect.objectContaining({
                     node: Node.STRING_TYPE,
                     array: true,
-                    buildIn: "String"
+                    buildIn: "string"
                 }));
                 expect(result.definitions[1]).toEqual(expect.objectContaining({
                     node: Node.DECLARATION
@@ -39,7 +39,7 @@ describe("Test Parser - parse context", () => {
                 expect(result.definitions[1].type).toEqual(expect.objectContaining({
                     node: Node.NUMBER_TYPE,
                     array: false,
-                    buildIn: "Number"
+                    buildIn: "number"
                 }));
                 expect(result.definitions[2]).toEqual(expect.objectContaining({
                     node: Node.DECLARATION
@@ -51,7 +51,7 @@ describe("Test Parser - parse context", () => {
                 expect(result.definitions[2].type).toEqual(expect.objectContaining({
                     node: Node.STRING_TYPE,
                     array: false,
-                    buildIn: "String"
+                    buildIn: "string"
                 }));
                 expect(result.definitions[3]).toEqual(expect.objectContaining({
                     node: Node.DECLARATION
@@ -63,7 +63,7 @@ describe("Test Parser - parse context", () => {
                 expect(result.definitions[3].type).toEqual(expect.objectContaining({
                     node: Node.DATE_TYPE,
                     array: false,
-                    buildIn: "Number"
+                    buildIn: "date"
                 }));
                 expect(result.init[0]).toEqual(expect.objectContaining({
                     node: Node.ASSIGN
@@ -340,7 +340,7 @@ describe("Test Parser - parse rule", () => {
             });
         });
     });
-    exp = "@@ @ user.age :: >= 16 & <= +35, >60+7-x => result := 'true' @@";
+    exp = "@@ @ user.age :: >= 16 & <= +35, >60+7-x => result := true @@";
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp);
         let parser = new Parser();
@@ -427,8 +427,8 @@ describe("Test Parser - parse rule", () => {
                     name: "result"
                 }));
                 expect(result.then.actions[0].expression).toEqual(expect.objectContaining({
-                    node: Node.STRING,
-                    value: "'true'"
+                    node: Node.BOOL,
+                    value: true
                 }));
             });
         });
@@ -926,6 +926,66 @@ describe("Test Parser - parse rule", () => {
                 expect(result.when.condition.right.right).toEqual(expect.objectContaining({
                     node: Node.NUMBER,
                     value: 5.9
+                }));
+                expect(result.then).toEqual(expect.objectContaining({
+                    node: Node.THEN
+                }));
+                expect(result.then.actions[0]).toEqual(expect.objectContaining({
+                    node: Node.ASSIGN
+                }));
+                expect(result.then.actions[0].var).toEqual(expect.objectContaining({
+                    node: Node.VAR,
+                    name: "result.acl"
+                }));
+                expect(result.then.actions[0].expression).toEqual(expect.objectContaining({
+                    node: Node.STRING,
+                    value: "'allow'"
+                }));
+            });
+        });
+    });
+    exp = "@@ @ user.groups :: 'member' && user.age :: >=18 => result.acl := 'allow' @@";
+    describe("Expression "+exp, () => {
+        let lexer = new Lexer(exp);
+        let parser = new Parser();
+        it("should contain expected nodes", () => {
+            expect.assertions(13);
+            return parser.parse(lexer).then(parser => {
+                //console.log(JSON.stringify(parser.ast()))
+                let result = parser.ast().rules[0];
+                expect(result).toEqual(expect.objectContaining({
+                    node: Node.RULE
+                }));
+                expect(result.when).toEqual(expect.objectContaining({
+                    node: Node.WHEN
+                }));
+                expect(result.when.condition).toEqual(expect.objectContaining({
+                    node: Node.AND
+                }));
+                expect(result.when.condition.left).toEqual(expect.objectContaining({
+                    node: Node.RELATION_OP,
+                    operator: "=="
+                }));
+                expect(result.when.condition.left.left).toEqual(expect.objectContaining({
+                    node: Node.VAR,
+                    name: "user.groups"
+                }));
+                expect(result.when.condition.left.right).toEqual(expect.objectContaining({
+                    node: Node.STRING,
+                    value: "'member'"
+                }));
+                expect(result.when.condition.right).toEqual(expect.objectContaining({
+                    node: Node.RELATION_OP,
+                    operator: ">="
+                }));
+                expect(result.when.condition.right.left).toEqual(expect.objectContaining({
+                    node: Node.VAR,
+                    name: "user.age"
+                }));
+                expect(result.when.condition.right.right).toEqual(expect.objectContaining({
+                    node: Node.NUMBER,
+                    type: { array: false, buildIn: "Number", node: "NUMBER_TYPE"},
+                    value: 18
                 }));
                 expect(result.then).toEqual(expect.objectContaining({
                     node: Node.THEN
