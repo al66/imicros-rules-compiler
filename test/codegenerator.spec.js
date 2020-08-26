@@ -118,24 +118,25 @@ describe("Test Compiler - parse rule", () => {
         });
     });
     exp = "@@ ";
-    exp += "environment.date[date]; >date[date] := environment.date; result[boolean]:=false";
+    exp += "environment.date[date]; >date[date] := environment.date; result[boolean]:=false; > env[object]:=environment;";
     exp += "@ environment.date :: [2018-1-21 06:00..2018-2-23 08:00],>=2018-05-07 09:00 => result := true; rule:= 5";
     exp += " @@";
     describe("Expression "+exp, () => {
         let lexer = new Lexer(exp);
         let parser = new Parser();
         it("compiled function should return expected results", () => {
-            expect.assertions(8);
+            expect.assertions(9);
             return parser.parse(lexer).then(parser => Symbols.build(parser.ast()))
             .then(ast => Analyzer.analyze(ast))
             .then(ast => Codegenerator.build(ast))
             .then(ruleset => {
                 //console.log(beautify(ruleset.toString(), { indent_size: 2, wrap_line_length: 80 }));
                 let f = ruleset.getFunction();
-                let response = f({environment: {date: "2018-1-21 06:00"}});
+                let response = f({environment: {date: "2018-1-21 06:00", day: 1}});
                 //console.log(response)
                 expect(response.result).toEqual(true);
                 expect(response.rule).toEqual(5);
+                expect(response.env).toEqual({date: "2018-1-21 06:00", day: 1});
                 response = f({environment: {date: "2018-1-21 05:00"}});
                 //console.log(response)
                 expect(response.result).toEqual(false);
