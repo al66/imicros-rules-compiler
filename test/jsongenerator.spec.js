@@ -7,7 +7,7 @@ const Parser = require("../lib/parser");
 // const Node = require("../lib/parser").Node;
 const Lexer = require("../lib/lexer");
 // const Token = require("../lib/lexer").Token;
-// const util = require("util");
+const util = require("util");
 
 describe("Test Compiler - parse rule", () => {
     /*
@@ -103,10 +103,10 @@ describe("Test Compiler - parse rule", () => {
                 expect(ruleset.input).toContainEqual({ label: "Current date", source: "environment.date", type: "date", array: true});
                 expect(ruleset.input).toContainEqual({ label: "Locale", source: "user.locale", type: "string", array: false, default: "'en'"});
                 expect(ruleset.input).toContainEqual({ label: "", source: "count", type: "number", array: false, default: "1 + 1"});
-                expect(ruleset.output).toContainEqual({ label: "", destination: "date", type: "date", array: false});
-                expect(ruleset.output).toContainEqual({ label: "", destination: "result", type: "boolean", array: false});
+                expect(ruleset.output).toContainEqual({ label: "", destination: "date", type: "date", array: false, default: "environment.date"});
+                expect(ruleset.output).toContainEqual({ label: "", destination: "result", type: "boolean", array: false, default: false });
+                expect(ruleset.output).toContainEqual({ label: "", destination: "env", type: "object", array: false, default: "environment" });
                 // console.log(exp);
-                // console.log(util.inspect(ruleset, false, null, true ));
             });
         });
     });
@@ -129,12 +129,13 @@ describe("Test Compiler - parse rule", () => {
                 return JsonGenerator.build(ast);
             })
             .then(ruleset => {
+                // console.log(util.inspect(ruleset, false, null, true ));
                 expect(ruleset).toBeDefined();
                 expect(ruleset.input).toContainEqual({ label: "", source: "environment.date", type: "", array: false});
                 expect(ruleset.input).toContainEqual({ label: "", source: "user.locale", type: "", array: false});
                 expect(ruleset.input).toContainEqual({ label: "", source: "user.name", type: "", array: false});
-                expect(ruleset.output).toContainEqual({ label: "", destination: "result", type: "", array: false});
-                expect(ruleset.output).toContainEqual({ label: "", destination: "rule", type: "", array: false});
+                expect(ruleset.output).toContainEqual({ label: "", destination: "result", type: "", array: false });
+                expect(ruleset.output).toContainEqual({ label: "", destination: "rule", type: "", array: false });
                 // console.log(exp);
                 // console.log(util.inspect(ruleset, false, null, true ));
             });

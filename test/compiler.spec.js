@@ -48,7 +48,7 @@ describe("Test Compiler - parse ruleset", () => {
                 expect(ruleset.input).toContainEqual({ label: "Current date", source: "environment.date", type: "date", array: true});
                 expect(ruleset.input).toContainEqual({ label: "Locale", source: "user.locale", type: "string", array: false, default: "'en'"});
                 expect(ruleset.input).toContainEqual({ label: "", source: "count", type: "number", array: false, default: "1 + 1"});
-                expect(ruleset.output).toContainEqual({ label: "", destination: "date", type: "date", array: false});
+                expect(ruleset.output).toContainEqual({ label: "", destination: "date", type: "date", array: false, default:"environment.date"});
             });
         });
     });
