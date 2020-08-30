@@ -81,7 +81,7 @@ describe("Test Compiler - parse rule", () => {
     */
     describe("Expression with input/output defintions", () => {
         let exp = "@@ ~C ";
-        exp += "environment.date[..date] #Current date#; user.locale[string]:='en' #Locale#; count[number]:= 1+1; >date[date] := environment.date; > result[boolean]:=false";
+        exp += "environment.date[..date] #Current date#; user.locale[string]:='en' #Locale#; count[number]:= 1+1; >date[date] := environment.date; > result[boolean]:=false; > env[object]:=environment;";
         exp += "@ environment.date :: [2018-1-21 06:00..2018-2-23 08:00],>=2018-05-07 09:00 => result := true; rule:= 1 # rule one # ";
         exp += "@ environment.date :: [2018-1-21 06:00..2018-2-23 08:00[,>=2018-05-07 09:00 & <= 2020-05-07 09:00 => result := user.confirmed(a) + 1 + 'yes'; rule:= 1 + 1  # rule two # ";
         exp += "@ user.locale :: 'de','es' => result := user.confirmed(a); rule:= 1 + 1  # rule two # ";
