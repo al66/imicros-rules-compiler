@@ -41,9 +41,9 @@
     },
     "homepage": "https://github.com/al66/imicros-rules-compiler#readme",
     "devDependencies": {
-        "coveralls": "^3.1.0",
-        "jest": "^24.9.0",
-        "js-beautify": "^1.13.0"
+        "coveralls": "^3.1.1",
+        "jest": "^27.3.1",
+        "js-beautify": "^1.14.0"
     },
     "dependencies": {
         "datejs": "^1.0.0-rc3",
