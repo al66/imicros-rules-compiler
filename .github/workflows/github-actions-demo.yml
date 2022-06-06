@@ -1,7 +1,7 @@
 name: Unit test
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Run test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
